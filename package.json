@@ -1,6 +1,6 @@
 {
   "name": "ono-http",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Oh No! HTTP ... Throw better HTTP errors.",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,9 @@
     "printf",
     "format",
     "wrap",
-    "inner"
+    "ono",
+    "inner",
+    "http"
   ],
   "author": "Daniel Henrique Joppi <daniel.joppi@gmail.com>",
   "license": "MIT",

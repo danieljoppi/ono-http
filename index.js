@@ -3,11 +3,13 @@ var ono = require('ono');
 var statuses = require('statuses');
 var codes = statuses.codes;
 
+var httpErrors = {};
+
 codes.forEach(function (code) {
     var statusMessage = statuses[code];
     var identifier = toIdentifier(statusMessage);
 
-    exports[identifier] = function () {
+    httpErrors[code] = OnoHttp[identifier] = function () {
         var args = Array.prototype.slice.call(arguments);
         var err = ono.apply(this, args);
         err.status = code;
@@ -18,6 +20,21 @@ codes.forEach(function (code) {
         return err;
     };
 });
+
+module.exports = OnoHttp;
+
+/**
+ * Make Oh No! HTTP!
+ * @param code
+ * @return {Function}
+ * @constructor
+ */
+function OnoHttp(code) {
+    if (!code || isNaN(+code)) {
+        code = 500;
+    }
+    return httpErrors[code] || httpErrors[500];
+}
 
 function toIdentifier (str) {
     return str.split(' ').map(function (token, i) {
